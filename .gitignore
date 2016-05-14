@@ -1,0 +1,13 @@
+*.class
+bin/
+*~
+logs.zip
+*.orig
+xtend-gen/
+src-gen/
+target/
+build/
+.gradle/
+*.java._trace
+*.smap
+

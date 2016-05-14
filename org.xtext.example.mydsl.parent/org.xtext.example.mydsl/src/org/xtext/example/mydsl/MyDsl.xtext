@@ -3,7 +3,15 @@ grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
 generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
 
 Model:
-	greetings+=Greeting*;
-	
+	greetings+=AbstractGreeting*;
+
+AbstractGreeting:
+	Greeting | GreetingReference
+;
+
 Greeting:
 	'Hello' name=ID '!';
+
+GreetingReference:
+	'ref' greeting=[Greeting]
+;

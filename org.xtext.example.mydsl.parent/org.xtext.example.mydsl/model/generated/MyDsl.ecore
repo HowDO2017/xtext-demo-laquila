@@ -5,10 +5,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="greetings" upperBound="-1"
         eType="#//AbstractGreeting" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractGreeting"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Greeting" eSuperTypes="#//AbstractGreeting">
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractGreeting">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Greeting" eSuperTypes="#//AbstractGreeting"/>
   <eClassifiers xsi:type="ecore:EClass" name="GreetingReference" eSuperTypes="#//AbstractGreeting">
     <eStructuralFeatures xsi:type="ecore:EReference" name="greeting" eType="#//Greeting"/>
   </eClassifiers>

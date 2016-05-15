@@ -9,10 +9,10 @@
     <genClasses ecoreClass="MyDsl.ecore#//Model">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Model/greetings"/>
     </genClasses>
-    <genClasses ecoreClass="MyDsl.ecore#//AbstractGreeting"/>
-    <genClasses ecoreClass="MyDsl.ecore#//Greeting">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//Greeting/name"/>
+    <genClasses ecoreClass="MyDsl.ecore#//AbstractGreeting">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//AbstractGreeting/name"/>
     </genClasses>
+    <genClasses ecoreClass="MyDsl.ecore#//Greeting"/>
     <genClasses ecoreClass="MyDsl.ecore#//GreetingReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MyDsl.ecore#//GreetingReference/greeting"/>
     </genClasses>

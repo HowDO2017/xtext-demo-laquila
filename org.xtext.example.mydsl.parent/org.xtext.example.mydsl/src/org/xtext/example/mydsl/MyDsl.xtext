@@ -13,5 +13,5 @@ Greeting:
 	'Hello' name=ID '!';
 
 GreetingReference:
-	'alias' name=ID 'for' greeting=[Greeting]
+	'alias' name=ID 'for' greeting=[AbstractGreeting]
 ;

@@ -10,6 +10,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Greeting" eSuperTypes="#//AbstractGreeting"/>
   <eClassifiers xsi:type="ecore:EClass" name="GreetingReference" eSuperTypes="#//AbstractGreeting">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="greeting" eType="#//Greeting"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="greeting" eType="#//AbstractGreeting"/>
   </eClassifiers>
 </ecore:EPackage>

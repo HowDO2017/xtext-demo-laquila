@@ -11,13 +11,14 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.xtext.example.mydsl.myDsl.Model
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 
 @RunWith(XtextRunner)
 @InjectWith(MyDslInjectorProvider)
 class MyDslParsingTest{
 
-	@Inject
-	ParseHelper<Model> parseHelper
+	@Inject extension ParseHelper<Model> parseHelper
+	@Inject extension ValidationTestHelper
 
 	@Test 
 	def void loadModel() {
@@ -27,4 +28,24 @@ class MyDslParsingTest{
 		Assert.assertNotNull(result)
 	}
 
+	@Test
+	def void testReferences() {
+		'''
+		Hello foo!
+		alias bar for foo
+		'''.parse.assertNoErrors
+	}
+
+	@Test
+	def void testWrongReference() {
+		'''
+		alias bar for foo
+		Hello foo!
+		'''.parse => [
+			Assert.assertEquals(
+				"Couldn't resolve reference to AbstractGreeting 'foo'.",
+				validate.map[message].join(",")
+			)
+		]
+	}
 }

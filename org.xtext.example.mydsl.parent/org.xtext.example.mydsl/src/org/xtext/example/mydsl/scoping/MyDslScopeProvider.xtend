@@ -3,6 +3,11 @@
  */
 package org.xtext.example.mydsl.scoping
 
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.scoping.Scopes
+import org.xtext.example.mydsl.myDsl.GreetingReference
+import org.xtext.example.mydsl.myDsl.Model
 
 /**
  * This class contains custom scoping description.
@@ -12,4 +17,18 @@ package org.xtext.example.mydsl.scoping
  */
 class MyDslScopeProvider extends AbstractMyDslScopeProvider {
 
+	override getScope(EObject context, EReference reference) {
+		if (context instanceof GreetingReference) {
+			val model = context.eContainer as Model
+			val definedBefore = newLinkedList()
+			for (g : model.greetings) {
+				if (g != context)
+					definedBefore += g
+				else
+					return Scopes.scopeFor(definedBefore)
+			}
+		}
+		return super.getScope(context, reference)
+	}
+	
 }

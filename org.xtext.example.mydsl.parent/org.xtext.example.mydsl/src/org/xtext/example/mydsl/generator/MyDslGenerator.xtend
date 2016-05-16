@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import org.xtext.example.mydsl.myDsl.Greeting
 
 /**
  * Generates code from your model files on save.
@@ -16,10 +17,23 @@ import org.eclipse.xtext.generator.IGeneratorContext
 class MyDslGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
+		resource.allContents.filter(Greeting).forEach[
+			greeting |
+			fsa.generateFile("javagreetings/" + greeting.name.toFirstUpper + ".java",
+			'''
+			package javagreetings;
+			
+			public class «greeting.name.toFirstUpper» {
+				public String greeting() {
+					return "Hello «greeting.name»!";
+				}
+				
+				public static void main(String args[]) {
+					System.out.println(new «greeting.name.toFirstUpper»().greeting());
+				}
+			}
+			'''
+			)
+		]
 	}
 }

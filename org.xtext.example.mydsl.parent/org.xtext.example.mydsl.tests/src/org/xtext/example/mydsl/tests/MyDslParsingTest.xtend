@@ -12,6 +12,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.xtext.example.mydsl.myDsl.Model
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
+import org.xtext.example.mydsl.myDsl.MyDslPackage
+import org.xtext.example.mydsl.validation.MyDslValidator
 
 @RunWith(XtextRunner)
 @InjectWith(MyDslInjectorProvider)
@@ -45,6 +47,28 @@ class MyDslParsingTest{
 			Assert.assertEquals(
 				"Couldn't resolve reference to AbstractGreeting 'foo'.",
 				validate.map[message].join(",")
+			)
+		]
+	}
+
+	@Test def void testDuplicateGreetings() {
+		val input =
+		'''
+		Hello foo!
+		Hello foo!
+		'''.toString
+		input.parse => [
+			assertError(
+				MyDslPackage.eINSTANCE.greeting,
+				MyDslValidator.DUPLICATE,
+				input.indexOf("foo"), 3,
+				"Duplicate name"
+			)
+			assertError(
+				MyDslPackage.eINSTANCE.greeting,
+				MyDslValidator.DUPLICATE,
+				input.lastIndexOf("foo"), 3,
+				"Duplicate name"
 			)
 		]
 	}

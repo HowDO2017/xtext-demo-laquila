@@ -3,23 +3,39 @@
  */
 package org.xtext.example.mydsl.validation
 
+import org.xtext.example.mydsl.myDsl.Model
+import org.eclipse.xtext.validation.Check
+import org.xtext.example.mydsl.myDsl.MyDslPackage
 
 /**
  * This class contains custom validation rules. 
- *
+ * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class MyDslValidator extends AbstractMyDslValidator {
-	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					MyDslPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
-	
+
+	public static final String DUPLICATE = "Duplicate"
+
+	@Check
+	def duplicateChoiceText(Model model) {
+		var nameToGreeting = newHashMap
+		for (g : model.greetings) {
+			val greetingWithSameName = nameToGreeting.put(g.name, g)
+			if (greetingWithSameName != null) {
+				error(
+					"Duplicate name",
+					g,
+					MyDslPackage.eINSTANCE.abstractGreeting_Name,
+					DUPLICATE
+				)
+				error(
+					"Duplicate name",
+					greetingWithSameName,
+					MyDslPackage.eINSTANCE.abstractGreeting_Name,
+					DUPLICATE
+				)
+			}
+		}
+	}
+
 }

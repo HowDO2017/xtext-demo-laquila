@@ -20,15 +20,11 @@ class MyDslScopeProvider extends AbstractMyDslScopeProvider {
 	override getScope(EObject context, EReference reference) {
 		if (context instanceof GreetingReference) {
 			val model = context.eContainer as Model
-			val definedBefore = newLinkedList()
-			for (g : model.greetings) {
-				if (g != context)
-					definedBefore += g
-				else
-					return Scopes.scopeFor(definedBefore)
-			}
+			return Scopes.scopeFor(
+				model.greetings.takeWhile[it != context]
+			)
 		}
 		return super.getScope(context, reference)
 	}
-	
+
 }
